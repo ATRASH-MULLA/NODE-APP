@@ -17,9 +17,9 @@ pipeline{
 				}
 			}
 
-			stage('deploy') {
-				steps{
-					echo 'Starting Deployment to EC2...'
+		stage('deploy') {
+			steps{
+				echo 'Starting Deployment to EC2...'
 
 					sshagent(['ec2-ssh-key']) {
 						ssh '''
