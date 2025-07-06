@@ -9,5 +9,12 @@ pipeline{
 						echo "Building Complete"
 				}
 			}
+			stage("Build"){
+				steps{
+					echo "Starting Deployment on EC2"
+					sh "scp -r -o strictCheckingOfKey=No ./dist* /home/ubuntunode-app/"
+					sh 'npm start'
+					echo "Deployment Done"
+					}
 		}
 	}
