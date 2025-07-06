@@ -19,10 +19,16 @@ pipeline{
 
 			stage('deploy') {
 				steps{
-					echo "Starting Deployment on EC2"
-					sh 'scp -r -o strictCheckingOfKey=No ./dist* /home/ubuntunode-app/'
-					sh 'npm start'
-					echo "Deployment Done"
+					echo 'Starting Deployment to EC2...'
+
+					sshagent(['ec2-ssh-key']) {
+						ssh '''
+							echo "Copying build artifacts to EC2"
+							scp -o StrictHostKeyChecking=no -r dist/ ubuntu@35.154.236.204:/var/www/html
+							echo "Restarting Web Server On EC2"
+							echo "Starting Deployment On EC2"
+						'''
+							}
 					}
 		}
 	}
