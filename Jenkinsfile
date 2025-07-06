@@ -1,15 +1,23 @@
 pipeline{
 	agent any
-		stages{
-			stage('build'){
-					steps{
-						echo "Start Building"
-						sh 'npm install'
-						sh 'npm run build'
-						echo "Building Complete"
+
+	enviornment {
+		EC2_USER = 'ubuntu'
+		EC2_HOST = '35.154.236.204'
+		SSH_CREDENTIAL_ID = 'ec2-ssh-key'
+	}
+	
+	stages{
+		stage('build'){
+			steps{
+					echo "Start Building"
+					sh 'npm install'
+					sh 'npm run build'
+					echo "Building Complete"
 				}
 			}
-			stage('deploy'){
+
+			stage('deploy') {
 				steps{
 					echo "Starting Deployment on EC2"
 					sh 'scp -r -o strictCheckingOfKey=No ./dist* /home/ubuntunode-app/'
