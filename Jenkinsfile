@@ -4,7 +4,7 @@ pipeline{
 	enviornment {
 		DEPLOY_DIR = '/var/www/html'
 		SERVICE_NAME = 'ngnix'
-	}
+		}
 	
 	stages{
 		stage('Build'){
