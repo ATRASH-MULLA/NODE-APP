@@ -9,12 +9,12 @@ pipeline{
 	stages{
 		stage('Build'){
 			steps{
-					echo "Installing Dependencies"
-					sh 'npm install'
+				echo "Installing Dependencies"
+				sh 'npm install'
 
-					echo "Building The Application..."
-					sh 'npm run build'
-					echo "Build Complete"
+				echo "Building The Application..."
+				sh 'npm run build'
+				echo "Build Complete"
 				}
 			}
 
@@ -33,5 +33,5 @@ pipeline{
 					echo 'Deployment Completed'
 					}
 				}
+			}
 		}
-	}
