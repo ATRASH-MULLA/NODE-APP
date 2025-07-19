@@ -2,35 +2,36 @@ pipeline{
 	agent any
 
 	enviornment {
-		EC2_USER = 'ubuntu'
-		EC2_HOST = '35.154.236.204'
-		SSH_CREDENTIAL_ID = 'ec2-ssh-key'
+		DEPLOY_DIR = '/var/www/html'
+		SERVICE_NAME = 'ngnix'
 	}
 	
 	stages{
-		stage('build'){
+		stage('Build'){
 			steps{
-					echo "Start Building"
+					echo "Installing Dependencies"
 					sh 'npm install'
+
+					echo "Building The Application..."
 					sh 'npm run build'
-					echo "Building Complete"
+					echo "Build Complete"
 				}
 			}
 
-		stage('deploy') {
+		stage('Deploy') {
 			steps{
-				echo 'Starting Deployment to EC2...'
+				echo 'Deploying Build To Local Web Server...'
+					ssh '''
+						echo "Copying build to $DEPLOY_DIR"
+						sudo rm -rf ${DEPLOY_DIR}/*
+						sudo cp -r dist/* ${DEPLOY_DIR}/
 
-					sshagent(['ec2-ssh-key']) {
-						ssh '''
-							echo "Copying build artifacts to EC2"
-							sudo cp -r dist/ /var/www/html
-							echo "Restarting Web Server On EC2"
-							echo "Starting Deployment On EC2"
-						'''
-						}
-						echo "Deployment Complete"
+						echo "Restarting $SERVICE_NAME"
+						sudo systemctl restart ${SERVICE_NAME}
+					'''
+
+					echo 'Deployment Completed'
 					}
+				}
 		}
 	}
-}
