@@ -1,13 +1,13 @@
 pipeline{
 	agent any
 
-	enviornment {
+	environment {
 		DEPLOY_DIR = '/var/www/html'
 		SERVICE_NAME = 'nginx'
 	}
 	
 	stages{
-		stage('Build'){
+		stage('build'){
 			steps{
 				echo "Installing Dependencies"
 				sh 'npm install'
@@ -21,7 +21,7 @@ pipeline{
 		stage('Deploy') {
 			steps{
 				echo 'Deploying Build To Local Web Server...'
-				ssh '''
+				sh '''
 					echo "Copying build to $DEPLOY_DIR"
 					sudo rm -rf ${DEPLOY_DIR}/*
 					sudo cp -r dist/* ${DEPLOY_DIR}/
