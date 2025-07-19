@@ -3,7 +3,7 @@ pipeline{
 
 	enviornment {
 		DEPLOY_DIR = '/var/www/html'
-		SERVICE_NAME = 'ngnix'
+		SERVICE_NAME = 'nginx'
 	}
 	
 	stages{
@@ -35,5 +35,3 @@ pipeline{
 				}
 			}
 		}
-
-		
