@@ -1,7 +1,7 @@
 pipeline{
     agent any
 
-    enviornment{
+    enviornment {
         EC2_HOST = "13.233.102.138"             //ip of EC2 server
         SSH_CREDENTIAL_ID = "GLOBALCRED"        //global credential name
         REMOTE_USER = "ubuntu"
